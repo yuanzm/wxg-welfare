@@ -1,35 +1,24 @@
 /* @author: zimyuan
- * @last-edit-date: 2015-09-12
+ * @last-edit-date: 2015-10-04
  */
 
 // 引入所需模块
 var express 		 = require("express");
-// var auth 			 = require('./middlewares/auth');
-//var site 			 = require("./controllers/site");
-//var sign 			 = require("./controllers/sign");
-// var user 			 = require("./controllers/user");
-// var chat 			 = require('./controllers/chat');
-// var config 			 = require('./config');
-// var upload 			 = require('./controllers/upload');
+var site 			 = require("./controllers/site");
+var apply            = require('./controllers/apply');
+var welfare          = require('./controllers/welfare');
+var config 			 = require('./config');
 var router           = express.Router();
 // home page
-//router.get('/', site.index);
-// router.get('/chat', chat.index);
+router.get('/', site.index);
 
-// 注册登录登出
-//router.get('/signup', sign.showSignUp);	// 渲染注册页面
-//router.post('/signup', sign.signUp);	// 登录请求
-//router.get('/signin', sign.showSignIn);	// 显示登录页面
-//router.post('/signin', sign.signIn);		// 登录请求
-//router.post('/signout', sign.signOut)	// 登出请求
+router.get('/allapply', apply.index);        // 所有可申请列表
+router.get('/apply/:id', apply.showApply);  // 展示一个申请单的数据
 
-// 用户
-// router.get('/user/:name', user.index);	// 显示用户个人中心
-// router.get('/setting', user.showSetting);	// 显示用户设置中心
-// router.post('/setting', auth.userRequired, user.setting);	// 更新用户设置请求	
+router.get('/newapply', apply.newapply); // 新建申请页面
+router.post('/newapply', apply.createNewApply);// 提交新的申请POST请求
 
-// 上传文件
-// router.get('/uptoken', auth.userRequired, upload.uptoken);
-// router.post('/downtoken', auth.userRequired, upload.downtoken);
+router.get('/mywelfare', welfare.mywelfare); // 已提交申请列表
+router.post('/newwelfare', welfare.createNewWelfare);   // 创建新的申请
 
 module.exports = router;

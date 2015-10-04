@@ -13,6 +13,10 @@ mongoose.connect(config.db, function(err) {
 });
 
 require('./user.js');
+require('./welfare.js');
+require('./apply.js');
 
 exports.User = mongoose.model('User');
- 
+exports.Welfare = mongoose.model('Welfare');
+exports.Apply = mongoose.model('Apply');
+

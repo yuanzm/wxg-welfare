@@ -14,7 +14,7 @@ var path                = require("path"),
     router              = require("./router"),
     auth                = require('./middlewares/auth'),
     errorPageMiddleware = require("./middlewares/error_page"),
-    RedisStore          = require('connect-redis')(session);
+    MongoStore          = require('connect-mongo')(session);
     _                   = require('lodash'),
     csurf               = require('csurf'),
     compress            = require('compression'),
@@ -62,18 +62,18 @@ app.use(cookieParser);
 app.use(compress());
 
 var session = session({
-    secret: config.session_secret,
-    store: new RedisStore({
-        port: config.redis_port,
-        host: config.redis_host
-    }),
-    resave: true,
-    saveUninitialized: true,
-});
-
+  secret: config.session_secret,
+  store: new MongoStore({
+    url: config.db
+  }),
+  resave: true,
+  saveUninitialized: true,
+})
 app.use(session);
 
-app.listen(3000);
+app.listen(3000, function() {
+	console.log('server running')
+});
 
 if (!config.debug) {
   app.use(function (req, res, next) {
